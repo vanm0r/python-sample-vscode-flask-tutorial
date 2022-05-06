@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: "ubuntu-latest"
+  vmImage: "windows-latest"
 strategy:
   matrix:
     Python27:
@@ -20,8 +20,7 @@ strategy:
 steps:
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '3.6'
-  displayName: 'Use Python $(python.version)'
+    versionSpec: '$(python.version)'
 
 - script: |
     python -m pip install --upgrade pip
