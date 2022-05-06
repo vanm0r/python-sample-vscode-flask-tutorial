@@ -6,16 +6,27 @@
 trigger:
 - master
 
-pool:
-  vmImage: "windows-latest"
+- job:
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.7'
-  displayName: 'Use Python 3.7'
+  pool:
+    vmImage: 'ubuntu-latest'
+  strategy:
+    matrix:
+      Python27:
+        python.version: '2.7'
+      Python36:
+        python.version: '3.6'
+      Python37:
+        python.version: '3.7'
 
-- script: |
-    python -m pip install flake8
-    flake8 .
-  displayName: 'Run lint tests'
+  steps:
+  - task: UsePythonVersion@0
+    displayName: 'Use Python $(python.version)'
+    inputs:
+      versionSpec: '$(python.version)'
+
+  - script: pip install tox
+    displayName: 'Install Tox'
+
+  - script: tox -e py
+    displayName: 'Run Tox'
