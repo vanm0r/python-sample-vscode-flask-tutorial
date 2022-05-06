@@ -15,4 +15,9 @@ steps:
     versionSpec: '3.7'
   displayName: 'Use Python 3.7'
 
-- script: python src/example.py
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      print('Hello world 1')
+      print('Hello world 2')
